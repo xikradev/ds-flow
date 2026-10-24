@@ -2,10 +2,27 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'bubble-sort',
-    title: 'Bubble Sort | DSflow',
+    path: 'sort',
     loadComponent: () =>
-      import('./features/sorting/pages/bubble-sort/bubble-sort.page').then((module) => module.BubbleSortPage),
+      import('./features/sorting/pages/sorting-layout/sorting-layout.page').then(
+        (module) => module.SortingLayoutPage,
+      ),
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'bubble' },
+      {
+        path: 'bubble',
+        title: 'Bubble Sort | DSflow',
+        loadComponent: () =>
+          import('./features/sorting/pages/bubble-sort/bubble-sort.page').then(
+            (module) => module.BubbleSortPage,
+          ),
+      },
+    ],
   },
-  { path: '', pathMatch: 'full', redirectTo: 'bubble-sort' },
+  { path: 'bubble-sort', pathMatch: 'full', redirectTo: 'sort/bubble' },
+  { path: '', pathMatch: 'full', redirectTo: 'sort/bubble' },
+  {
+    path: '**',
+    redirectTo: 'sort/bubble',
+  },
 ];
