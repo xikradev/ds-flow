@@ -19,7 +19,11 @@ Use os scripts definidos no `package.json`. Os comandos esperados para o projeto
 - `npm run build` — gera a versão de produção.
 - `npm test` — executa a suíte de testes.
 
-Prefira as classes utilitárias do Tailwind a CSS isolado.
+Use sempre classes utilitárias do Tailwind para desenvolver estilos de interface. Evite CSS isolado em componentes; mantenha no stylesheet global apenas tokens de tema, fontes e estilos base indispensáveis.
+
+## UI/UX
+
+Antes de desenvolver ou alterar qualquer interface, experiência ou interação visual, leia o arquivo `DESIGN_SYSTEM.md` e siga as diretrizes definidas nele.
 
 ## Coding Style & Naming Conventions
 
