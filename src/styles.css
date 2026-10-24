@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-void: #06121f;
+  --color-deep: #0b1e32;
+  --color-panel: #102941;
+  --color-panel-raised: #163653;
+  --color-line: #224765;
+  --color-line-bright: #3b7098;
+  --color-ink: #ebf6ff;
+  --color-ink-muted: #91abc0;
+  --color-signal: #42a5ff;
+  --color-signal-strong: #1787e7;
+  --color-flow: #3cdbba;
+  --color-flow-deep: #1ca98c;
+  --color-alert: #ffb84d;
+  --color-fault: #ff6f7d;
+  --color-code: #b8cae1;
+
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --shadow-panel: 0 20px 50px rgb(0 5 12 / 0.3);
+  --shadow-signal: 0 0 28px rgb(66 165 255 / 0.24);
+  --shadow-flow: 0 0 24px rgb(60 219 186 / 0.22);
+}
+
+:root {
+  color: var(--color-ink);
+  background: var(--color-void);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body { min-height: 100%; }
+body { margin: 0; font-family: var(--font-sans); }
+button, input, select, textarea { font: inherit; }
+:focus-visible { outline: 3px solid var(--color-flow); outline-offset: 3px; }
