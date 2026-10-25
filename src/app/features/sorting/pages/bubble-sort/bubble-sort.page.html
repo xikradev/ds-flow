@@ -1,7 +1,42 @@
 <section
   id="simulator"
-  class="min-h-0 bg-[linear-gradient(rgb(34_71_101_/_0.16)_1px,transparent_1px),linear-gradient(90deg,rgb(34_71_101_/_0.16)_1px,transparent_1px)] bg-center [background-size:44px_44px]"
+  class="flex h-full min-h-0 items-center justify-center overflow-auto bg-[linear-gradient(rgb(34_71_101_/_0.16)_1px,transparent_1px),linear-gradient(90deg,rgb(34_71_101_/_0.16)_1px,transparent_1px)] bg-center p-6 [background-size:44px_44px] sm:p-10"
   aria-label="Área de visualização do bubble sort"
 >
-  <!-- A lista e os estados da ordenação serão renderizados aqui futuramente. -->
+  <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4" aria-label="Lista de valores">
+    @for (value of values(); track $index) {
+      <div
+        class="flex size-16 shrink-0 items-center justify-center rounded-xl border border-line-bright bg-panel-raised font-mono text-xl font-semibold text-ink shadow-panel transition-transform duration-200 sm:size-20 sm:text-2xl"
+        [attr.aria-label]="'Valor ' + value"
+      >
+        {{ value }}
+      </div>
+    }
+
+    @if (isAddingValue()) {
+      <input
+        #valueInput
+        class="size-16 shrink-0 rounded-xl border border-signal bg-deep px-1 text-center font-mono text-xl font-semibold text-ink shadow-signal outline-none transition duration-200 placeholder:text-ink-muted sm:size-20 sm:text-2xl"
+        type="number"
+        min="1"
+        max="99"
+        step="1"
+        inputmode="numeric"
+        placeholder="1–99"
+        aria-label="Novo valor entre 1 e 99"
+        [value]="newValue()"
+        (input)="updateNewValue(valueInput.value)"
+        (keyup.enter)="addValue()"
+      />
+    } @else {
+      <button
+        type="button"
+        class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-line-bright bg-deep text-ink-muted transition duration-200 hover:border-signal hover:bg-panel hover:text-signal focus-visible:border-flow sm:size-20"
+        aria-label="Adicionar valor à lista"
+        (click)="startAdding()"
+      >
+        <mat-icon class="!size-auto !text-3xl sm:!text-4xl" aria-hidden="true">add</mat-icon>
+      </button>
+    }
+  </div>
 </section>
