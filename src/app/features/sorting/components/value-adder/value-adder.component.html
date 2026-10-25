@@ -1,0 +1,49 @@
+@if (isAdding()) {
+  <div class="shrink-0">
+    <input
+      #valueInput
+      cdkOverlayOrigin
+      #valueInputOrigin="cdkOverlayOrigin"
+      class="size-16 rounded-xl border border-line-bright bg-deep px-1 text-center font-mono text-xl font-semibold text-ink outline-none transition duration-200 placeholder:text-ink-muted [appearance:textfield] focus:bg-deep focus:border-signal/60 focus:shadow-[0_0_12px_rgb(66_165_255_/_0.20)] focus-visible:!outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none sm:size-20 sm:text-2xl"
+      type="number"
+      min="1"
+      max="99"
+      step="1"
+      inputmode="numeric"
+      placeholder="1–99"
+      aria-label="Novo valor entre 1 e 99. Use as setas para cima e para baixo para ajustar."
+      aria-describedby="value-adder-hint"
+      [value]="value()"
+      (input)="updateValue(valueInput.value)"
+      (blur)="cancel()"
+      (keyup.enter)="add()"
+    />
+
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="valueInputOrigin"
+      [cdkConnectedOverlayOpen]="isAdding()"
+      [cdkConnectedOverlayPositions]="tooltipPositions"
+      [cdkConnectedOverlayPush]="true"
+      [cdkConnectedOverlayViewportMargin]="16"
+    >
+      <div
+        id="value-adder-hint"
+        role="tooltip"
+        class="flex w-60 items-center gap-2 rounded-xl border border-line-bright bg-panel px-3 py-2 font-sans text-xs leading-5 text-ink shadow-panel"
+      >
+        <mat-icon class="!size-5 shrink-0 !text-xl !leading-5 text-signal" aria-hidden="true">info_outline</mat-icon>
+        <span>Digite um valor de 1 a 99 e adicione pressionando Enter</span>
+      </div>
+    </ng-template>
+  </div>
+} @else {
+  <button
+    type="button"
+    class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-line-bright bg-deep text-ink-muted transition duration-200 hover:border-signal hover:bg-panel hover:text-signal focus-visible:border-flow sm:size-20"
+    aria-label="Adicionar valor à lista"
+    (click)="startAdding()"
+  >
+    <mat-icon class="!size-auto !text-3xl sm:!text-4xl" aria-hidden="true">add</mat-icon>
+  </button>
+}
