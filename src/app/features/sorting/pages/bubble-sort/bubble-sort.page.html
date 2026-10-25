@@ -16,16 +16,17 @@
     @if (isAddingValue()) {
       <input
         #valueInput
-        class="size-16 shrink-0 rounded-xl border border-signal bg-deep px-1 text-center font-mono text-xl font-semibold text-ink shadow-signal outline-none transition duration-200 placeholder:text-ink-muted sm:size-20 sm:text-2xl"
+        class="size-16 shrink-0 rounded-xl border border-line-bright bg-deep px-1 text-center font-mono text-xl font-semibold text-ink outline-none transition duration-200 placeholder:text-ink-muted [appearance:textfield] focus:bg-deep focus:border-signal/60 focus:shadow-[0_0_12px_rgb(66_165_255_/_0.20)] focus-visible:!outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none sm:size-20 sm:text-2xl"
         type="number"
         min="1"
         max="99"
         step="1"
         inputmode="numeric"
         placeholder="1–99"
-        aria-label="Novo valor entre 1 e 99"
+        aria-label="Novo valor entre 1 e 99. Use as setas para cima e para baixo para ajustar."
         [value]="newValue()"
         (input)="updateNewValue(valueInput.value)"
+        (blur)="cancelAdding()"
         (keyup.enter)="addValue()"
       />
     } @else {

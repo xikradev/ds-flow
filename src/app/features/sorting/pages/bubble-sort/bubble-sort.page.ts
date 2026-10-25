@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { afterNextRender, Component, ElementRef, inject, Injector, signal, viewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -10,16 +10,25 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './bubble-sort.page.html',
 })
 export class BubbleSortPage {
+  private readonly injector = inject(Injector);
+
   readonly values = signal<number[]>(Array.from({ length: 5 }, () => this.randomValue()));
   readonly isAddingValue = signal(false);
   readonly newValue = signal('');
+  readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('valueInput');
 
   startAdding(): void {
     this.isAddingValue.set(true);
+    afterNextRender(() => this.valueInput()?.nativeElement.focus(), { injector: this.injector });
   }
 
   updateNewValue(value: string): void {
     this.newValue.set(value);
+  }
+
+  cancelAdding(): void {
+    this.newValue.set('');
+    this.isAddingValue.set(false);
   }
 
   addValue(): void {
@@ -30,8 +39,7 @@ export class BubbleSortPage {
     }
 
     this.values.update((values) => [...values, value]);
-    this.newValue.set('');
-    this.isAddingValue.set(false);
+    this.cancelAdding();
   }
 
   private randomValue(): number {
