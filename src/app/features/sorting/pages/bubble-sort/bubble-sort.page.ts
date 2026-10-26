@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { SortingValueComponent } from '../../components/sorting-value/sorting-value.component';
 import { ValueAdderComponent } from '../../components/value-adder/value-adder.component';
 import { SortingListService } from '../../services/sorting-list.service';
@@ -13,4 +13,9 @@ import { SortingListService } from '../../services/sorting-list.service';
 })
 export class BubbleSortPage {
   readonly sortingList = inject(SortingListService);
+  readonly newestValueId = signal<number | null>(null);
+
+  addValue(value: number): void {
+    this.newestValueId.set(this.sortingList.addValue(value));
+  }
 }

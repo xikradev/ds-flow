@@ -14,6 +14,8 @@ import {
 import { ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
 import { MatIconModule } from '@angular/material/icon';
 
+const DELETE_ANIMATION_DURATION = 200;
+
 @Component({
   selector: 'app-sorting-value',
   imports: [MatIconModule, OverlayModule],
@@ -23,12 +25,15 @@ import { MatIconModule } from '@angular/material/icon';
 export class SortingValueComponent implements OnDestroy {
   private readonly injector = inject(Injector);
   private invalidValueTimeout?: ReturnType<typeof setTimeout>;
+  private deleteTimeout?: ReturnType<typeof setTimeout>;
 
   readonly value = input.required<number>();
+  readonly isNew = input(false);
   readonly deleteRequested = output<void>();
   readonly valueEdited = output<number>();
   readonly isMenuOpen = signal(false);
   readonly isEditing = signal(false);
+  readonly isRemoving = signal(false);
   readonly hasInvalidValue = signal(false);
   readonly editingValue = signal('');
   readonly input = viewChild<ElementRef<HTMLInputElement>>('valueInput');
@@ -81,8 +86,16 @@ export class SortingValueComponent implements OnDestroy {
   }
 
   requestDelete(): void {
-    this.deleteRequested.emit();
+    if (this.isRemoving()) {
+      return;
+    }
+
     this.closeMenu();
+    this.isRemoving.set(true);
+    this.deleteTimeout = setTimeout(() => {
+      this.deleteRequested.emit();
+      this.deleteTimeout = undefined;
+    }, DELETE_ANIMATION_DURATION);
   }
 
   startEditing(): void {
@@ -121,6 +134,7 @@ export class SortingValueComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.clearInvalidValueFeedback();
+    this.clearDeleteTimeout();
   }
 
   private showInvalidValueFeedback(): void {
@@ -139,5 +153,12 @@ export class SortingValueComponent implements OnDestroy {
     }
 
     this.hasInvalidValue.set(false);
+  }
+
+  private clearDeleteTimeout(): void {
+    if (this.deleteTimeout) {
+      clearTimeout(this.deleteTimeout);
+      this.deleteTimeout = undefined;
+    }
   }
 }

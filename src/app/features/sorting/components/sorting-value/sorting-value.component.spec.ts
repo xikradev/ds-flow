@@ -14,7 +14,7 @@ describe('SortingValueComponent', () => {
     expect(component.isMenuOpen()).toBe(false);
   });
 
-  it('emits a delete request and closes the menu', () => {
+  it('plays the exit duration before emitting a delete request', fakeAsync(() => {
     const fixture = TestBed.createComponent(SortingValueComponent);
     fixture.componentRef.setInput('value', 42);
     const component = fixture.componentInstance;
@@ -25,9 +25,14 @@ describe('SortingValueComponent', () => {
     component.openMenu();
     component.requestDelete();
 
-    expect(deleted).toHaveBeenCalledTimes(1);
+    expect(component.isRemoving()).toBe(true);
+    expect(deleted).not.toHaveBeenCalled();
     expect(component.isMenuOpen()).toBe(false);
-  });
+
+    tick(200);
+
+    expect(deleted).toHaveBeenCalledTimes(1);
+  }));
 
   it('emits a valid edited value and returns to display mode', () => {
     const fixture = TestBed.createComponent(SortingValueComponent);

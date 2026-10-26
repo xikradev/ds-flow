@@ -4,14 +4,15 @@
   aria-label="Área de visualização do bubble sort"
 >
   <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4" aria-label="Lista de valores">
-    @for (value of sortingList.values(); track $index; let index = $index) {
+    @for (item of sortingList.items(); track item.id; let index = $index) {
       <app-sorting-value
-        [value]="value"
+        [value]="item.value"
+        [isNew]="item.id === newestValueId()"
         (deleteRequested)="sortingList.removeValueAt(index)"
         (valueEdited)="sortingList.updateValueAt(index, $event)"
       />
     }
 
-    <app-value-adder (valueAdded)="sortingList.addValue($event)" />
+    <app-value-adder (valueAdded)="addValue($event)" />
   </div>
 </section>

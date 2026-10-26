@@ -37,4 +37,16 @@ describe('SortingListService', () => {
 
     expect(service.values()).toEqual([...previousValues.slice(0, 2), 42, ...previousValues.slice(3)]);
   });
+
+  it('keeps item identities stable when an earlier value is removed', () => {
+    const service = TestBed.inject(SortingListService);
+    const previousItems = service.items();
+
+    service.removeValueAt(1);
+
+    expect(service.items().map((item) => item.id)).toEqual([
+      previousItems[0].id,
+      ...previousItems.slice(2).map((item) => item.id),
+    ]);
+  });
 });

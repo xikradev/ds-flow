@@ -34,6 +34,8 @@
         role="tooltip"
         aria-live="polite"
         class="flex w-60 items-center gap-2 rounded-xl border border-line-bright bg-panel px-3 py-2 font-sans text-xs leading-5 text-ink shadow-panel transition duration-200 data-[invalid]:border-fault/70 data-[invalid]:bg-fault/15"
+        [class.tooltip-info-animation]="!hasInvalidValue()"
+        [class.tooltip-warning-animation]="hasInvalidValue()"
         [attr.data-invalid]="hasInvalidValue() || null"
       >
         <mat-icon
@@ -58,9 +60,12 @@
     cdkOverlayOrigin
     type="button"
     class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-line-bright bg-panel-raised font-mono text-xl font-semibold text-ink shadow-panel transition duration-200 hover:border-signal hover:bg-panel focus-visible:border-flow sm:size-20 sm:text-2xl"
+    [class.value-entry-animation]="isNew()"
+    [class.value-exit-animation]="isRemoving()"
     [attr.aria-label]="'Ações para o valor ' + value()"
     aria-haspopup="menu"
     [attr.aria-expanded]="isMenuOpen()"
+    [disabled]="isRemoving()"
     (click)="openMenu()"
   >
     {{ value() }}
