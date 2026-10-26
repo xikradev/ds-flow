@@ -4,7 +4,7 @@
       #valueInput
       cdkOverlayOrigin
       #valueInputOrigin="cdkOverlayOrigin"
-      class="size-16 rounded-xl border border-line-bright bg-deep px-1 text-center font-mono text-xl font-semibold text-ink outline-none transition duration-200 placeholder:text-ink-muted [appearance:textfield] focus:bg-deep focus:border-signal/60 focus:shadow-[0_0_12px_rgb(66_165_255_/_0.20)] focus-visible:!outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none sm:size-20 sm:text-2xl"
+      class="size-16 rounded-xl border border-line-bright bg-deep px-1 text-center font-mono text-xl font-semibold text-ink outline-none transition duration-200 placeholder:text-ink-muted [appearance:textfield] focus:bg-deep focus:border-signal/60 focus:shadow-[0_0_12px_rgb(66_165_255_/_0.20)] focus-visible:!outline-none data-[invalid]:border-fault/80 data-[invalid]:shadow-[0_0_14px_rgb(255_111_125_/_0.52)] data-[invalid]:focus:border-fault data-[invalid]:focus:shadow-[0_0_14px_rgb(255_111_125_/_0.52)] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none sm:size-20 sm:text-2xl"
       type="number"
       min="1"
       max="99"
@@ -13,6 +13,7 @@
       placeholder="1–99"
       aria-label="Novo valor entre 1 e 99. Use as setas para cima e para baixo para ajustar."
       aria-describedby="value-adder-hint"
+      [attr.data-invalid]="hasInvalidValue() || null"
       [value]="value()"
       (input)="updateValue(valueInput.value)"
       (blur)="cancel()"
@@ -30,10 +31,23 @@
       <div
         id="value-adder-hint"
         role="tooltip"
-        class="flex w-60 items-center gap-2 rounded-xl border border-line-bright bg-panel px-3 py-2 font-sans text-xs leading-5 text-ink shadow-panel"
+        aria-live="polite"
+        class="flex w-60 items-center gap-2 rounded-xl border border-line-bright bg-panel px-3 py-2 font-sans text-xs leading-5 text-ink shadow-panel transition duration-200 data-[invalid]:border-fault/70 data-[invalid]:bg-fault/15"
+        [attr.data-invalid]="hasInvalidValue() || null"
       >
-        <mat-icon class="!size-5 shrink-0 !text-xl !leading-5 text-signal" aria-hidden="true">info_outline</mat-icon>
-        <span>Digite um valor de 1 a 99 e adicione pressionando Enter</span>
+        <mat-icon
+          class="!size-5 shrink-0 !text-xl !leading-5"
+          [class.text-fault]="hasInvalidValue()"
+          [class.text-signal]="!hasInvalidValue()"
+          aria-hidden="true"
+        >{{ hasInvalidValue() ? 'warning_amber' : 'info_outline' }}</mat-icon>
+        <span>
+          {{
+            hasInvalidValue()
+              ? 'Número inválido. Insira um numero que seja de 1 a 99 e pressione enter para adiciona-lo'
+              : 'Digite um valor de 1 a 99 e adicione pressionando Enter'
+          }}
+        </span>
       </div>
     </ng-template>
   </div>

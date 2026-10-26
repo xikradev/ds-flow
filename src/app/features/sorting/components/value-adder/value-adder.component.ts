@@ -1,4 +1,14 @@
-import { afterNextRender, Component, ElementRef, inject, Injector, output, signal, viewChild } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  ElementRef,
+  inject,
+  Injector,
+  OnDestroy,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -7,11 +17,13 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatIconModule, OverlayModule],
   templateUrl: './value-adder.component.html',
 })
-export class ValueAdderComponent {
+export class ValueAdderComponent implements OnDestroy {
   private readonly injector = inject(Injector);
+  private invalidValueTimeout?: ReturnType<typeof setTimeout>;
 
   readonly valueAdded = output<number>();
   readonly isAdding = signal(false);
+  readonly hasInvalidValue = signal(false);
   readonly value = signal('');
   readonly input = viewChild<ElementRef<HTMLInputElement>>('valueInput');
   readonly tooltipPositions: ConnectedPosition[] = [
@@ -44,10 +56,12 @@ export class ValueAdderComponent {
   }
 
   updateValue(value: string): void {
+    this.clearInvalidValueFeedback();
     this.value.set(value);
   }
 
   cancel(): void {
+    this.clearInvalidValueFeedback();
     this.value.set('');
     this.isAdding.set(false);
   }
@@ -56,10 +70,33 @@ export class ValueAdderComponent {
     const value = Number(this.value());
 
     if (!Number.isInteger(value) || value < 1 || value > 99) {
+      this.showInvalidValueFeedback();
       return;
     }
 
     this.valueAdded.emit(value);
     this.cancel();
+  }
+
+  ngOnDestroy(): void {
+    this.clearInvalidValueFeedback();
+  }
+
+  private showInvalidValueFeedback(): void {
+    this.clearInvalidValueFeedback();
+    this.hasInvalidValue.set(true);
+    this.invalidValueTimeout = setTimeout(() => {
+      this.hasInvalidValue.set(false);
+      this.invalidValueTimeout = undefined;
+    }, 5_000);
+  }
+
+  private clearInvalidValueFeedback(): void {
+    if (this.invalidValueTimeout) {
+      clearTimeout(this.invalidValueTimeout);
+      this.invalidValueTimeout = undefined;
+    }
+
+    this.hasInvalidValue.set(false);
   }
 }
