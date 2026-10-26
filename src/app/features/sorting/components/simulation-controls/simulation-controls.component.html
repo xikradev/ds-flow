@@ -1,0 +1,30 @@
+<footer class="flex justify-center border-t border-line bg-[rgb(11_30_50_/_0.92)] px-4 py-5 shadow-[0_-16px_40px_rgb(0_5_12_/_0.13)] sm:px-8">
+  <div class="flex w-full items-center justify-between gap-2 rounded-[0.9rem] border border-line bg-[rgb(16_41_65_/_0.82)] p-2 shadow-panel sm:w-auto sm:justify-start" aria-label="Controles de simulação">
+    <button class="inline-flex min-h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-[0.6rem] border border-transparent bg-transparent px-2 text-[0.69rem] font-semibold text-ink-muted transition-[background,border-color,color] duration-180 hover:border-line-bright hover:bg-panel-raised hover:text-ink max-[400px]:gap-1 sm:flex-none sm:gap-2 sm:px-4 sm:text-[0.85rem]" type="button" (click)="previousStep.emit()">
+      <svg class="size-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18 5.75v12.5L8 12l10-6.25Z" fill="currentColor" />
+        <path d="M6 6v12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" />
+      </svg>
+      <span>Previous step</span>
+    </button>
+
+    <div class="h-7 w-px bg-line" aria-hidden="true"></div>
+
+    <button class="inline-flex min-h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-[0.6rem] border border-transparent bg-signal px-2 text-[0.69rem] font-semibold text-void transition-[background,border-color,color] duration-180 hover:border-signal hover:bg-signal-strong hover:text-void max-[400px]:gap-1 sm:flex-none sm:gap-2 sm:px-4 sm:text-[0.85rem]" type="button" (click)="togglePlayback.emit()">
+      <svg class="size-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 5.75v12.5L18 12 8 5.75Z" fill="currentColor" />
+      </svg>
+      <span>Start / Pause</span>
+    </button>
+
+    <div class="h-7 w-px bg-line" aria-hidden="true"></div>
+
+    <button class="inline-flex min-h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-[0.6rem] border border-transparent bg-transparent px-2 text-[0.69rem] font-semibold text-ink-muted transition-[background,border-color,color] duration-180 hover:border-line-bright hover:bg-panel-raised hover:text-ink max-[400px]:gap-1 sm:flex-none sm:gap-2 sm:px-4 sm:text-[0.85rem]" type="button" (click)="nextStep.emit()">
+      <svg class="size-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 5.75v12.5L16 12 6 5.75Z" fill="currentColor" />
+        <path d="M18 6v12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" />
+      </svg>
+      <span>Next step</span>
+    </button>
+  </div>
+</footer>

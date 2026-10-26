@@ -10,6 +10,12 @@ Este é um projeto Angular 20 com Tailwind CSS. Organize o código em `src/app/`
 
 Evite dependências entre features; compartilhe por `shared/` ou `core/`. Não versione artefatos gerados, caches ou credenciais.
 
+## Roteamento de Ordenação
+
+As páginas de métodos de ordenação são rotas-filhas de `/sort`. O componente de layout dessa rota é responsável por renderizar persistentemente o header, o `router-outlet` central e o footer com os controles da simulação. Cada método ocupa somente a área central; por exemplo, Bubble Sort é acessado em `/sort/bubble`.
+
+Ao adicionar um método, crie uma rota-filho de `/sort` e não replique o header ou footer na página do método. A rota `/sort` deve redirecionar para o método padrão, e rotas legadas podem redirecionar para a nova URL quando necessário.
+
 ## Build, Test, and Development Commands
 
 Use os scripts definidos no `package.json`. Os comandos esperados para o projeto Angular são:
