@@ -16,6 +16,16 @@ export class SortingListService {
     this.list.update((values) => [...values, value]);
   }
 
+  removeValueAt(index: number): void {
+    this.list.update((values) => values.filter((_, valueIndex) => valueIndex !== index));
+  }
+
+  updateValueAt(index: number, value: number): void {
+    this.list.update((values) => values.map((currentValue, valueIndex) =>
+      valueIndex === index ? value : currentValue,
+    ));
+  }
+
   private randomValue(): number {
     return Math.floor(Math.random() * MAX_VALUE) + MIN_VALUE;
   }

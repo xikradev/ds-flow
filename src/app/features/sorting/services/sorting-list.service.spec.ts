@@ -19,4 +19,22 @@ describe('SortingListService', () => {
 
     expect(service.values()).toEqual([...previousValues, 42]);
   });
+
+  it('removes the value at the requested index', () => {
+    const service = TestBed.inject(SortingListService);
+    const previousValues = service.values();
+
+    service.removeValueAt(2);
+
+    expect(service.values()).toEqual([...previousValues.slice(0, 2), ...previousValues.slice(3)]);
+  });
+
+  it('updates the value at the requested index', () => {
+    const service = TestBed.inject(SortingListService);
+    const previousValues = service.values();
+
+    service.updateValueAt(2, 42);
+
+    expect(service.values()).toEqual([...previousValues.slice(0, 2), 42, ...previousValues.slice(3)]);
+  });
 });

@@ -4,13 +4,12 @@
   aria-label="Área de visualização do bubble sort"
 >
   <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4" aria-label="Lista de valores">
-    @for (value of sortingList.values(); track $index) {
-      <div
-        class="flex size-16 shrink-0 items-center justify-center rounded-xl border border-line-bright bg-panel-raised font-mono text-xl font-semibold text-ink shadow-panel transition-transform duration-200 sm:size-20 sm:text-2xl"
-        [attr.aria-label]="'Valor ' + value"
-      >
-        {{ value }}
-      </div>
+    @for (value of sortingList.values(); track $index; let index = $index) {
+      <app-sorting-value
+        [value]="value"
+        (deleteRequested)="sortingList.removeValueAt(index)"
+        (valueEdited)="sortingList.updateValueAt(index, $event)"
+      />
     }
 
     <app-value-adder (valueAdded)="sortingList.addValue($event)" />

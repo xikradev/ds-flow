@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { SortingValueComponent } from '../../components/sorting-value/sorting-value.component';
 import { ValueAdderComponent } from '../../components/value-adder/value-adder.component';
 import { SortingListService } from '../../services/sorting-list.service';
 
@@ -7,7 +8,7 @@ import { SortingListService } from '../../services/sorting-list.service';
   host: {
     class: 'block h-full',
   },
-  imports: [ValueAdderComponent],
+  imports: [SortingValueComponent, ValueAdderComponent],
   templateUrl: './bubble-sort.page.html',
 })
 export class BubbleSortPage {
