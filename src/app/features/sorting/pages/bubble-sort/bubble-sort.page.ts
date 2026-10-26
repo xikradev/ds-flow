@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ValueAdderComponent } from '../../components/value-adder/value-adder.component';
+import { SortingListService } from '../../services/sorting-list.service';
 
 @Component({
   selector: 'app-bubble-sort-page',
@@ -10,13 +11,5 @@ import { ValueAdderComponent } from '../../components/value-adder/value-adder.co
   templateUrl: './bubble-sort.page.html',
 })
 export class BubbleSortPage {
-  readonly values = signal<number[]>(Array.from({ length: 5 }, () => this.randomValue()));
-
-  addValue(value: number): void {
-    this.values.update((values) => [...values, value]);
-  }
-
-  private randomValue(): number {
-    return Math.floor(Math.random() * 99) + 1;
-  }
+  readonly sortingList = inject(SortingListService);
 }
