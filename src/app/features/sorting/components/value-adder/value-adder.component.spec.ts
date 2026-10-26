@@ -11,12 +11,12 @@ describe('ValueAdderComponent', () => {
     component.updateValue('100');
     component.add();
 
-    expect(component.hasInvalidValue()).toBeTrue();
+    expect(component.hasInvalidValue()).toBe(true);
     expect(addedValues).toEqual([]);
 
     tick(5_000);
 
-    expect(component.hasInvalidValue()).toBeFalse();
+    expect(component.hasInvalidValue()).toBe(false);
   }));
 
   it('emits integer values within the allowed range', () => {
@@ -29,7 +29,7 @@ describe('ValueAdderComponent', () => {
     component.add();
 
     expect(addedValues).toEqual([99]);
-    expect(component.hasInvalidValue()).toBeFalse();
+    expect(component.hasInvalidValue()).toBe(false);
   });
 
   it('restores the information feedback when the value changes', () => {
@@ -40,6 +40,6 @@ describe('ValueAdderComponent', () => {
     component.add();
     component.updateValue('99');
 
-    expect(component.hasInvalidValue()).toBeFalse();
+    expect(component.hasInvalidValue()).toBe(false);
   });
 });
