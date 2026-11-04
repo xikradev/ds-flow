@@ -30,3 +30,9 @@ O DS Flow apresenta estruturas de dados como elementos em movimento sobre uma su
 - Movimentos devem durar entre 150 e 220 ms e ilustrar deslocamento de dados. Respeite a preferência por movimento reduzido.
 
 Os tokens vivem em `src/styles.css` e são consumidos com classes Tailwind, como `bg-panel`, `text-signal` e `font-mono`.
+
+## Tema escuro
+
+O tema escuro usa fundo azul-profundo (`#081827`), painéis em `#10283D` e texto claro (`#EDF6FF`). Valores usam azul médio para manter destaque, enquanto erros permanecem identificáveis com fundo vermelho escuro opaco e borda clara. O controle no cabeçalho alterna os temas e guarda a escolha no navegador. Os mesmos tokens semânticos se adaptam aos dois temas, incluindo menus e tooltips.
+
+Todo componente visual novo deve se adaptar aos temas claro e escuro. Use os tokens semânticos de cor e verifique contraste e legibilidade nos dois temas, incluindo estados de interação, foco, desabilitado e validação. Ao introduzir uma nova cor, defina seu valor para ambos os temas.

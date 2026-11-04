@@ -32,7 +32,7 @@
         id="value-adder-hint"
         role="tooltip"
         aria-live="polite"
-        class="flex w-60 items-center gap-2 rounded-xl border border-line-bright bg-panel px-3 py-2 font-sans text-xs leading-5 text-ink shadow-panel transition duration-200 data-[invalid]:border-fault data-[invalid]:bg-[#fff0f1]"
+        class="flex w-60 items-center gap-2 rounded-xl border border-line-bright bg-panel px-3 py-2 font-sans text-xs leading-5 text-ink shadow-panel transition duration-200 data-[invalid]:border-fault data-[invalid]:bg-fault-surface"
         [class.tooltip-info-animation]="!hasInvalidValue()"
         [class.tooltip-warning-animation]="hasInvalidValue()"
         [attr.data-invalid]="hasInvalidValue() || null"
