@@ -3,29 +3,29 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-void: #06121f;
-  --color-deep: #0b1e32;
-  --color-panel: #102941;
-  --color-panel-raised: #163653;
-  --color-line: #224765;
-  --color-line-bright: #3b7098;
-  --color-ink: #ebf6ff;
-  --color-ink-muted: #91abc0;
-  --color-signal: #42a5ff;
-  --color-signal-strong: #1787e7;
-  --color-flow: #3cdbba;
-  --color-flow-deep: #1ca98c;
-  --color-alert: #ffb84d;
-  --color-fault: #ff6f7d;
-  --color-code: #b8cae1;
+  --color-void: #f2f7fc;
+  --color-deep: #ffffff;
+  --color-panel: #ffffff;
+  --color-panel-raised: #e8f2fc;
+  --color-line: #cbdced;
+  --color-line-bright: #91b3d1;
+  --color-ink: #102f4d;
+  --color-ink-muted: #486a85;
+  --color-signal: #1769b0;
+  --color-signal-strong: #10548f;
+  --color-flow: #1769b0;
+  --color-flow-deep: #10548f;
+  --color-alert: #986000;
+  --color-fault: #b42332;
+  --color-code: #365b79;
 
   --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-  --shadow-panel: 0 20px 50px rgb(0 5 12 / 0.3);
+  --shadow-panel: 0 20px 50px rgb(16 47 77 / 0.10);
   --shadow-signal: 0 0 28px rgb(66 165 255 / 0.24);
-  --shadow-flow: 0 0 24px rgb(60 219 186 / 0.22);
+  --shadow-flow: 0 0 24px rgb(23 105 176 / 0.18);
 }
 
 :root {
