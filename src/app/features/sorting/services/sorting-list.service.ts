@@ -1,13 +1,9 @@
 import { computed, Injectable, signal } from '@angular/core';
+import { SortingListItem } from '../state/sorting-simulation';
 
 const MIN_VALUE = 1;
 const MAX_VALUE = 99;
 const INITIAL_VALUES_COUNT = 5;
-
-export interface SortingListItem {
-  id: number;
-  value: number;
-}
 
 @Injectable({ providedIn: 'root' })
 export class SortingListService {

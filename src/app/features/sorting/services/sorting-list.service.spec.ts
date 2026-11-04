@@ -49,4 +49,17 @@ describe('SortingListService', () => {
       ...previousItems.slice(2).map((item) => item.id),
     ]);
   });
+
+  it('assigns distinct identities to repeated values', () => {
+    const service = TestBed.inject(SortingListService);
+
+    const firstId = service.addValue(42);
+    const secondId = service.addValue(42);
+
+    expect(firstId).not.toBe(secondId);
+    expect(service.items().slice(-2)).toEqual([
+      { id: firstId, value: 42 },
+      { id: secondId, value: 42 },
+    ]);
+  });
 });

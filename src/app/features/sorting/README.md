@@ -32,17 +32,13 @@ interface
 
 ## Etapas e histórico
 
-Os métodos precisam suportar pausar, avançar e voltar sem perder o estado visual. Para isso, o service do algoritmo deve trabalhar com snapshots imutáveis, preferencialmente por meio de uma estrutura semelhante a:
+Os métodos precisam suportar pausar, avançar e voltar sem perder o estado visual. Os contratos em `state/sorting-simulation.ts` definem snapshots imutáveis com itens e IDs, índices comparados, posições definitivas e indicação de troca. Os índices referem-se às posições no snapshot da própria etapa; IDs distinguem itens com valores iguais.
 
-```ts
-interface SortingStep {
-  values: number[];
-  comparing: [number, number] | null;
-  swapped: boolean;
-}
-```
+O histórico vazio usa índice atual `-1`; quando há etapas, o índice vai de `0` até `steps.length - 1`, inclusive. A reprodução pode estar em `idle`, `playing`, `paused` ou `completed`.
 
-Ao avançar, o service seleciona ou gera o próximo `SortingStep` e atualiza o `SortingListService` com `step.values`. Ao voltar, restaura o snapshot anterior. Informações visuais, como os índices em comparação ou uma troca realizada, pertencem à etapa do algoritmo — não à página.
+`BubbleSortService.generateSteps` gera o snapshot inicial, uma etapa para cada comparação, outra para cada troca e etapas para marcar posições definitivas. A entrada não é alterada; itens com valores iguais mantêm seus IDs e sua ordem relativa. Uma lista vazia gera somente o snapshot inicial; uma lista com um item também gera a marcação de sua posição definitiva.
+
+Ao avançar, o service seleciona ou gera o próximo `SortingStep` e atualiza o `SortingListService` com `step.items`. Ao voltar, restaura o snapshot anterior. Informações visuais, como os índices em comparação ou uma troca realizada, pertencem à etapa do algoritmo — não à página.
 
 ## Escopo de estado
 
