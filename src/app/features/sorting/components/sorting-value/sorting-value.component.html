@@ -59,16 +59,31 @@
     #valueOrigin="cdkOverlayOrigin"
     cdkOverlayOrigin
     type="button"
-    class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-xl border-2 border-value-border bg-value font-mono text-xl font-semibold text-ink shadow-panel transition duration-200 hover:border-signal hover:bg-value-hover focus-visible:border-flow sm:size-20 sm:text-2xl"
+    class="relative flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-xl border-2 font-mono text-xl font-semibold shadow-panel transition duration-200 focus-visible:border-flow sm:size-20 sm:text-2xl"
+    [class.border-value-border]="!comparing() && !sorted()"
+    [class.bg-value]="!comparing() && !sorted()"
+    [class.text-ink]="!comparing() && !sorted()"
+    [class.hover:bg-value-hover]="!comparing() && !sorted()"
+    [class.border-comparing-border]="comparing()"
+    [class.bg-comparing]="comparing()"
+    [class.text-comparing-ink]="comparing()"
+    [class.border-sorted-border]="sorted() && !comparing()"
+    [class.bg-sorted]="sorted() && !comparing()"
+    [class.text-sorted-ink]="sorted() && !comparing()"
     [class.value-entry-animation]="isNew()"
     [class.value-exit-animation]="isRemoving()"
-    [attr.aria-label]="'Ações para o valor ' + value()"
+    [attr.aria-label]="'Valor ' + value() + (comparing() ? ', em comparação' : sorted() ? ', em posição definitiva' : ', ações disponíveis')"
     aria-haspopup="menu"
     [attr.aria-expanded]="isMenuOpen()"
     [disabled]="disabled() || isRemoving()"
     (click)="openMenu()"
   >
     {{ value() }}
+    @if (comparing()) {
+      <span class="absolute right-1 top-0.5 font-sans text-xs font-bold" aria-hidden="true">↔</span>
+    } @else if (sorted()) {
+      <span class="absolute right-1 top-0.5 font-sans text-xs font-bold" aria-hidden="true">✓</span>
+    }
   </button>
 
   <ng-template

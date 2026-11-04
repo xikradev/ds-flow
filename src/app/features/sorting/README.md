@@ -13,16 +13,16 @@ Feature de visualização interativa dos algoritmos de ordenação. Antes de cri
 
 `SortingListService` é a fonte única de verdade para a lista atualmente exibida. Ele é responsável por inicializar e expor os valores, além de oferecer operações genéricas sobre eles, como adicionar, substituir, trocar e restaurar valores.
 
-Cada algoritmo tem seu próprio service, por exemplo `BubbleSortService`, `SelectionSortService` ou `InsertionSortService`. Esses services concentram exclusivamente as regras do método: comparações, decisão de troca, geração de etapas e controle da execução. Um algoritmo nunca deve modificar o array diretamente; ele calcula o próximo estado e o aplica por meio do `SortingListService`.
+Cada algoritmo tem seu próprio service, por exemplo `BubbleSortService`, `SelectionSortService` ou `InsertionSortService`. O `BubbleSortService` gera as etapas sem alterar a lista exibida; o `BubbleSortSimulationService` controla o histórico e a reprodução, aplicando snapshots pelo `SortingListService`.
 
 Essa separação permite que qualquer alteração ordenada seja refletida automaticamente na interface por meio do sinal `sortingList.values()` e evita duplicidade de estado entre página, algoritmo e componentes.
 
 ```text
-BubbleSortPage / componentes
+BubbleSortPage / controles do layout
           │ intenção do usuário
           ▼
-BubbleSortService
-          │ calcula a próxima etapa
+BubbleSortSimulationService ◄── BubbleSortService (gera etapas)
+          │ aplica a etapa selecionada
           ▼
 SortingListService
           │ sinal da lista atual
@@ -48,6 +48,8 @@ Ao avançar, o service seleciona ou gera o próximo `SortingStep` e atualiza o `
 
 Adição, edição e exclusão ficam indisponíveis durante a reprodução ou pausa. Ao iniciar, formulários e menus abertos são fechados e exclusões pendentes são canceladas. Uma alteração após a conclusão descarta o histórico anterior; a próxima reprodução é preparada com a lista alterada.
 
+As trocas são etapas próprias. A diretiva `appSwapAnimation` anima por 200 ms o deslocamento dos elementos identificados por ID entre posições renderizadas, inclusive em linhas diferentes. A navegação interrompe animações anteriores e a preferência por movimento reduzido elimina a animação sem alterar a etapa.
+
 ## Escopo de estado
 
-Enquanto a simulação precisar compartilhar a mesma lista entre métodos dentro de `/sort`, o `SortingListService` deve ser provido no escopo do layout da rota de ordenação, em vez de globalmente. Assim, o estado persiste durante a navegação entre métodos da feature e é descartado ao sair dela.
+O layout de `/sort` provê a lista e a simulação, compartilhando o estado com a rota-filha e descartando-o ao sair da feature. O header e os controles permanecem no layout; Bubble Sort ocupa a área central em `/sort/bubble`.

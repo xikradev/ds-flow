@@ -29,8 +29,8 @@ Cada tarefa é uma entrega pequena e verificável. Marque-a como concluída some
 
 - [x] **8. Proteger edição durante a simulação.** Desabilitar adição, edição e exclusão enquanto estiver reproduzindo ou pausado. Após a conclusão, permitir alterações e preparar uma nova simulação sem histórico obsoleto. Testar também menus ou edições já abertos no início da reprodução.
 
-- [ ] **9. Destacar comparações e valores ordenados.** Adicionar ao design system tokens amarelos e verdes para ambos os temas. Aplicar os estados aos quadrados, com informação acessível além da cor e contraste adequado. Testar os estados renderizados em cada etapa.
+- [x] **9. Destacar comparações e valores ordenados.** Adicionar ao design system tokens amarelos e verdes para ambos os temas. Aplicar os estados aos quadrados, com informação acessível além da cor e contraste adequado. Testar os estados renderizados em cada etapa.
 
-- [ ] **10. Animar as trocas.** Mostrar a troca como etapa própria e animar o deslocamento mantendo a identidade dos itens, inclusive com valores repetidos e em telas menores. Respeitar `prefers-reduced-motion` e preservar o estado correto ao pausar ou navegar.
+- [x] **10. Animar as trocas.** Mostrar a troca como etapa própria e animar o deslocamento mantendo a identidade dos itens, inclusive com valores repetidos e em telas menores. Respeitar `prefers-reduced-motion` e preservar o estado correto ao pausar ou navegar.
 
-- [ ] **11. Validar o fluxo completo.** Verificar manualmente reprodução, pausa, avanço, retorno, conclusão, reinício e edição nos dois temas e em telas menores. Executar `npm test` e `npm run build`; corrigir regressões e atualizar a documentação da feature conforme a implementação final.
+- [x] **11. Validar o fluxo completo.** Verificar manualmente reprodução, pausa, avanço, retorno, conclusão, reinício e edição nos dois temas e em telas menores. Executar `npm test` e `npm run build`; corrigir regressões e atualizar a documentação da feature conforme a implementação final.

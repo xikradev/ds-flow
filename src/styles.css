@@ -21,6 +21,12 @@
   --color-value: #d0e6f8;
   --color-value-hover: #bddcf4;
   --color-value-border: #6b9fc9;
+  --color-comparing: #fff1b8;
+  --color-comparing-border: #986000;
+  --color-comparing-ink: #563500;
+  --color-sorted: #d6f3dc;
+  --color-sorted-border: #287443;
+  --color-sorted-ink: #123c24;
   --color-fault-surface: #fff0f1;
 
   --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
@@ -55,6 +61,12 @@
   --color-value: #204d70;
   --color-value-hover: #2b6088;
   --color-value-border: #76b2de;
+  --color-comparing: #5c4200;
+  --color-comparing-border: #ffd36a;
+  --color-comparing-ink: #fff3c2;
+  --color-sorted: #174d32;
+  --color-sorted-border: #86dca2;
+  --color-sorted-ink: #ddffe8;
   --color-fault-surface: #522a32;
   --color-code: #c5daeb;
   --shadow-panel: 0 20px 50px rgb(0 0 0 / 0.25);

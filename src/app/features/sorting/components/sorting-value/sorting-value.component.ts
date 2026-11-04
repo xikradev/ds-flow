@@ -31,6 +31,8 @@ export class SortingValueComponent implements OnChanges, OnDestroy {
   readonly value = input.required<number>();
   readonly isNew = input(false);
   readonly disabled = input(false);
+  readonly comparing = input(false);
+  readonly sorted = input(false);
   readonly deleteRequested = output<void>();
   readonly valueEdited = output<number>();
   readonly isMenuOpen = signal(false);
