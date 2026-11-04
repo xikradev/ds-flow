@@ -17,11 +17,11 @@ Cada tarefa é uma entrega pequena e verificável. Marque-a como concluída some
 
 - [x] **2. Gerar etapas do Bubble Sort.** Implementar um serviço dedicado à sequência de comparações, trocas e marcação de posições definitivas, sem lógica de algoritmo nos componentes. Cobrir listas ordenadas, invertidas, com repetidos e casos de zero ou um item.
 
-- [ ] **3. Preparar a lista para restauração.** Ampliar `SortingListService` com operações necessárias para aplicar e restaurar snapshots preservando IDs, mantendo-o como fonte única da lista exibida. Testar restauração e identidade dos itens.
+- [x] **3. Preparar a lista para restauração.** Ampliar `SortingListService` com operações necessárias para aplicar e restaurar snapshots preservando IDs, mantendo-o como fonte única da lista exibida. Testar restauração e identidade dos itens.
 
-- [ ] **4. Implementar histórico e navegação.** Criar o estado da simulação com signals, etapa atual e histórico imutável. Implementar avanço e retorno, restaurando lista e metadados visuais, com limites seguros. Testar navegação até os extremos e retorno após trocas.
+- [x] **4. Implementar histórico e navegação.** Criar o estado da simulação com signals, etapa atual e histórico imutável. Implementar avanço e retorno, restaurando lista e metadados visuais, com limites seguros. Testar navegação até os extremos e retorno após trocas.
 
-- [ ] **5. Implementar reprodução automática.** Conectar início, pausa, retomada e temporizador às etapas. Garantir que a navegação manual pause a reprodução e que temporizadores sejam cancelados ao sair da feature. Testar com tempo controlado.
+- [x] **5. Implementar reprodução automática.** Conectar início, pausa, retomada e temporizador às etapas. Garantir que a navegação manual pause a reprodução e que temporizadores sejam cancelados ao sair da feature. Testar com tempo controlado.
 
 - [ ] **6. Implementar conclusão e reinício.** Ao chegar à última etapa, finalizar a reprodução e disponibilizar Restart. Reiniciar restaura a lista original e começa novamente; listas com menos de dois valores não podem iniciar. Testar esses fluxos e seus limites.
 

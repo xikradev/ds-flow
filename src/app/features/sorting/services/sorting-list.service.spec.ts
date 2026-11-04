@@ -62,4 +62,34 @@ describe('SortingListService', () => {
       { id: secondId, value: 42 },
     ]);
   });
+
+  it('applies a reordered snapshot and restores the original items and identities', () => {
+    const service = TestBed.inject(SortingListService);
+    const firstId = service.addValue(42);
+    const secondId = service.addValue(42);
+    const original = service.items();
+    const reordered = [...original].reverse();
+
+    service.applySnapshot(reordered);
+    expect(service.items()).toEqual(reordered);
+    expect(service.values()).toEqual(reordered.map((item) => item.value));
+
+    service.applySnapshot(original);
+    expect(service.items()).toEqual(original);
+    expect(service.items().slice(-2).map((item) => item.id)).toEqual([firstId, secondId]);
+  });
+
+  it('copies snapshot items and keeps future IDs unique after restoring older or external snapshots', () => {
+    const service = TestBed.inject(SortingListService);
+    const previousId = service.addValue(10);
+    const snapshot = [{ id: previousId + 10, value: 42 }];
+
+    service.applySnapshot(snapshot);
+    snapshot[0].value = 99;
+    expect(service.values()).toEqual([42]);
+
+    service.applySnapshot([]);
+    expect(service.items()).toEqual([]);
+    expect(service.addValue(20)).toBe(previousId + 11);
+  });
 });

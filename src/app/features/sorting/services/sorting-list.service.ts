@@ -8,12 +8,21 @@ const INITIAL_VALUES_COUNT = 5;
 @Injectable({ providedIn: 'root' })
 export class SortingListService {
   private nextItemId = 0;
-  private readonly list = signal<SortingListItem[]>(
+  private readonly list = signal<readonly SortingListItem[]>(
     Array.from({ length: INITIAL_VALUES_COUNT }, () => this.createItem(this.randomValue())),
   );
 
   readonly items = this.list.asReadonly();
   readonly values = computed(() => this.list().map((item) => item.value));
+
+  /** Aplica ou restaura uma lista preservando a identidade e a ordem dos itens. */
+  applySnapshot(items: readonly SortingListItem[]): void {
+    const snapshot = items.map((item) => ({ ...item }));
+    for (const item of snapshot) {
+      this.nextItemId = Math.max(this.nextItemId, item.id);
+    }
+    this.list.set(snapshot);
+  }
 
   addValue(value: number): number {
     const item = this.createItem(value);
