@@ -11,6 +11,36 @@ describe('BubbleSortPage editing', () => {
 
   afterEach(() => jest.useRealTimers());
 
+  it('shows the adder only before playback and after completion', () => {
+    const fixture = TestBed.createComponent(BubbleSortPage);
+    const list = TestBed.inject(SortingListService);
+    const simulation = TestBed.inject(BubbleSortSimulationService);
+    list.applySnapshot([{ id: 1, value: 2 }, { id: 2, value: 1 }]);
+    const adder = () => fixture.nativeElement.querySelector('app-value-adder');
+    fixture.detectChanges();
+    expect(adder()).not.toBeNull();
+    simulation.start();
+    fixture.detectChanges();
+    expect(adder()).toBeNull();
+    simulation.pause();
+    fixture.detectChanges();
+    expect(adder()).toBeNull();
+    simulation.start();
+    jest.advanceTimersByTime(10000);
+    fixture.detectChanges();
+    expect(adder()).not.toBeNull();
+    simulation.previous();
+    fixture.detectChanges();
+    expect(adder()).toBeNull();
+    simulation.next();
+    fixture.detectChanges();
+    expect(adder()).not.toBeNull();
+    simulation.restart();
+    fixture.detectChanges();
+    expect(adder()).toBeNull();
+    fixture.destroy();
+  });
+
   it('blocks add, edit and delete while playing and paused', () => {
     const fixture = TestBed.createComponent(BubbleSortPage);
     const page = fixture.componentInstance;

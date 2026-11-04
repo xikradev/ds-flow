@@ -46,7 +46,7 @@ Ao avançar, o service seleciona ou gera o próximo `SortingStep` e atualiza o `
 
 `start()` prepara o histórico quando necessário e inicia ou retoma a reprodução a cada segundo; `pause()` interrompe o temporizador. A navegação manual pausa a reprodução, inclusive nos limites. Ao alcançar a última etapa, automaticamente ou por navegação manual, o estado passa a `completed`. `restart()` restaura os itens iniciais e inicia uma nova reprodução; voltar de uma etapa concluída permite retomá-la. Listas com menos de dois itens não podem iniciar. O serviço de simulação e a lista são providos pelo layout de `/sort`, e o temporizador é cancelado quando esse escopo é destruído.
 
-Adição, edição e exclusão ficam indisponíveis durante a reprodução ou pausa. Ao iniciar, formulários e menus abertos são fechados e exclusões pendentes são canceladas. Uma alteração após a conclusão descarta o histórico anterior; a próxima reprodução é preparada com a lista alterada.
+Adição, edição e exclusão ficam indisponíveis durante a reprodução ou pausa, e o card de adição fica oculto nesses estados. Ao iniciar, formulários e menus abertos são fechados e exclusões pendentes são canceladas. Uma alteração após a conclusão descarta o histórico anterior; a próxima reprodução é preparada com a lista alterada.
 
 As trocas são etapas próprias. A diretiva `appSwapAnimation` anima por 200 ms o deslocamento dos elementos identificados por ID entre posições renderizadas, inclusive em linhas diferentes. A navegação interrompe animações anteriores e a preferência por movimento reduzido elimina a animação sem alterar a etapa.
 

@@ -18,7 +18,9 @@
       />
     }
 
-    <app-value-adder [disabled]="simulation.editingDisabled()" (valueAdded)="addValue($event)" />
+    @if (!simulation.editingDisabled()) {
+      <app-value-adder (valueAdded)="addValue($event)" />
+    }
   </div>
   <p class="sr-only" aria-live="polite" aria-atomic="true">{{ simulationDescription() }}</p>
 </section>
