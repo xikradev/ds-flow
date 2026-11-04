@@ -4,6 +4,8 @@ import {
   ElementRef,
   inject,
   Injector,
+  input,
+  OnChanges,
   OnDestroy,
   output,
   signal,
@@ -17,11 +19,12 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatIconModule, OverlayModule],
   templateUrl: './value-adder.component.html',
 })
-export class ValueAdderComponent implements OnDestroy {
+export class ValueAdderComponent implements OnChanges, OnDestroy {
   private readonly injector = inject(Injector);
   private invalidValueTimeout?: ReturnType<typeof setTimeout>;
 
   readonly valueAdded = output<number>();
+  readonly disabled = input(false);
   readonly isAdding = signal(false);
   readonly hasInvalidValue = signal(false);
   readonly value = signal('');
@@ -51,6 +54,7 @@ export class ValueAdderComponent implements OnDestroy {
   ];
 
   startAdding(): void {
+    if (this.disabled()) return;
     this.isAdding.set(true);
     afterNextRender(() => this.input()?.nativeElement.focus(), { injector: this.injector });
   }
@@ -67,6 +71,7 @@ export class ValueAdderComponent implements OnDestroy {
   }
 
   add(): void {
+    if (this.disabled()) return;
     const value = Number(this.value());
 
     if (!Number.isInteger(value) || value < 1 || value > 99) {
@@ -76,6 +81,10 @@ export class ValueAdderComponent implements OnDestroy {
 
     this.valueAdded.emit(value);
     this.cancel();
+  }
+
+  ngOnChanges(): void {
+    if (this.disabled()) this.cancel();
   }
 
   ngOnDestroy(): void {

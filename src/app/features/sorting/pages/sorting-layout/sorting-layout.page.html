@@ -7,5 +7,13 @@
     <router-outlet />
   </div>
 
-  <app-simulation-controls />
+  <app-simulation-controls
+    [playback]="simulation.playback()"
+    [canStart]="simulation.canStart()"
+    [canGoBack]="simulation.canGoBack()"
+    [canGoForward]="simulation.canGoForward()"
+    (previousStep)="simulation.previous()"
+    (togglePlayback)="togglePlayback()"
+    (nextStep)="simulation.next()"
+  />
 </main>

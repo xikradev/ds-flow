@@ -15,6 +15,15 @@ export class BubbleSortSimulationService implements OnDestroy {
 
   readonly history = this.historyState.asReadonly();
   readonly playback = this.playbackState.asReadonly();
+  readonly editingDisabled = computed(() =>
+    this.playbackState() === 'playing' || this.playbackState() === 'paused',
+  );
+  readonly canStart = computed(() =>
+    this.list.items().length >= 2 &&
+    this.playbackState() !== 'playing' &&
+    this.playbackState() !== 'completed' &&
+    (this.historyState().currentIndex === -1 || this.canGoForward()),
+  );
   readonly currentStep = computed(() => {
     const { steps, currentIndex } = this.historyState();
     return steps[currentIndex] ?? null;
@@ -35,15 +44,21 @@ export class BubbleSortSimulationService implements OnDestroy {
   }
 
   start(): void {
-    if (this.playbackState() === 'playing') return;
+    if (!this.canStart()) return;
     if (this.historyState().currentIndex === -1) this.prepare();
-    if (!this.canGoForward()) return;
 
     this.playbackState.set('playing');
     this.timer = setInterval(() => {
-      this.selectStep(this.historyState().currentIndex + 1);
-      if (!this.canGoForward()) this.pause();
+      this.advance();
     }, STEP_INTERVAL_MS);
+  }
+
+  restart(): void {
+    if (this.playbackState() !== 'completed') return;
+    const initialStep = this.historyState().steps[0];
+    this.list.applySnapshot(initialStep.items);
+    this.prepare();
+    this.start();
   }
 
   pause(): void {
@@ -54,14 +69,23 @@ export class BubbleSortSimulationService implements OnDestroy {
   next(): void {
     this.pause();
     if (this.canGoForward()) {
-      this.selectStep(this.historyState().currentIndex + 1);
+      this.advance();
+      if (this.playbackState() === 'idle') this.playbackState.set('paused');
     }
+  }
+
+  /** Descarta etapas após uma alteração da lista fora da simulação. */
+  resetAfterEdit(): void {
+    if (this.editingDisabled()) return;
+    this.historyState.set({ steps: [], currentIndex: -1 });
+    this.playbackState.set('idle');
   }
 
   previous(): void {
     this.pause();
     if (this.canGoBack()) {
       this.selectStep(this.historyState().currentIndex - 1);
+      if (this.playbackState() === 'completed') this.playbackState.set('paused');
     }
   }
 
@@ -73,6 +97,14 @@ export class BubbleSortSimulationService implements OnDestroy {
     if (this.timer !== null) {
       clearInterval(this.timer);
       this.timer = null;
+    }
+  }
+
+  private advance(): void {
+    this.selectStep(this.historyState().currentIndex + 1);
+    if (!this.canGoForward()) {
+      this.stopTimer();
+      this.playbackState.set('completed');
     }
   }
 

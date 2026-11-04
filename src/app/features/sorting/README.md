@@ -44,7 +44,9 @@ Ao avançar, o service seleciona ou gera o próximo `SortingStep` e atualiza o `
 
 `BubbleSortSimulationService.prepare()` cria um histórico a partir da lista exibida. `next()` e `previous()` selecionam etapas dentro dos limites, aplicando seus itens à lista; `currentStep` expõe os metadados visuais correspondentes. Antes da preparação, a etapa atual é nula e a navegação não altera a lista.
 
-`start()` prepara o histórico quando necessário e inicia ou retoma a reprodução a cada segundo; `pause()` interrompe o temporizador. A navegação manual pausa a reprodução, inclusive nos limites. O serviço de simulação e a lista são providos pelo layout de `/sort`, e o temporizador é cancelado quando esse escopo é destruído. Por enquanto, ao alcançar a última etapa, a reprodução fica pausada; conclusão e reinício serão tratados na entrega 6.
+`start()` prepara o histórico quando necessário e inicia ou retoma a reprodução a cada segundo; `pause()` interrompe o temporizador. A navegação manual pausa a reprodução, inclusive nos limites. Ao alcançar a última etapa, automaticamente ou por navegação manual, o estado passa a `completed`. `restart()` restaura os itens iniciais e inicia uma nova reprodução; voltar de uma etapa concluída permite retomá-la. Listas com menos de dois itens não podem iniciar. O serviço de simulação e a lista são providos pelo layout de `/sort`, e o temporizador é cancelado quando esse escopo é destruído.
+
+Adição, edição e exclusão ficam indisponíveis durante a reprodução ou pausa. Ao iniciar, formulários e menus abertos são fechados e exclusões pendentes são canceladas. Uma alteração após a conclusão descarta o histórico anterior; a próxima reprodução é preparada com a lista alterada.
 
 ## Escopo de estado
 

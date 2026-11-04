@@ -65,7 +65,7 @@
     [attr.aria-label]="'Ações para o valor ' + value()"
     aria-haspopup="menu"
     [attr.aria-expanded]="isMenuOpen()"
-    [disabled]="isRemoving()"
+    [disabled]="disabled() || isRemoving()"
     (click)="openMenu()"
   >
     {{ value() }}

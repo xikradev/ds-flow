@@ -6,6 +6,7 @@ import {
   inject,
   Injector,
   input,
+  OnChanges,
   OnDestroy,
   output,
   signal,
@@ -22,13 +23,14 @@ const DELETE_ANIMATION_DURATION = 200;
   templateUrl: './sorting-value.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SortingValueComponent implements OnDestroy {
+export class SortingValueComponent implements OnChanges, OnDestroy {
   private readonly injector = inject(Injector);
   private invalidValueTimeout?: ReturnType<typeof setTimeout>;
   private deleteTimeout?: ReturnType<typeof setTimeout>;
 
   readonly value = input.required<number>();
   readonly isNew = input(false);
+  readonly disabled = input(false);
   readonly deleteRequested = output<void>();
   readonly valueEdited = output<number>();
   readonly isMenuOpen = signal(false);
@@ -78,6 +80,7 @@ export class SortingValueComponent implements OnDestroy {
   ];
 
   openMenu(): void {
+    if (this.disabled()) return;
     this.isMenuOpen.set(true);
   }
 
@@ -86,7 +89,7 @@ export class SortingValueComponent implements OnDestroy {
   }
 
   requestDelete(): void {
-    if (this.isRemoving()) {
+    if (this.disabled() || this.isRemoving()) {
       return;
     }
 
@@ -99,6 +102,7 @@ export class SortingValueComponent implements OnDestroy {
   }
 
   startEditing(): void {
+    if (this.disabled()) return;
     this.closeMenu();
     this.clearInvalidValueFeedback();
     this.editingValue.set(String(this.value()));
@@ -116,6 +120,7 @@ export class SortingValueComponent implements OnDestroy {
   }
 
   saveEdit(): void {
+    if (this.disabled()) return;
     const value = Number(this.editingValue());
 
     if (!Number.isInteger(value) || value < 1 || value > 99) {
@@ -130,6 +135,15 @@ export class SortingValueComponent implements OnDestroy {
   cancelEdit(): void {
     this.clearInvalidValueFeedback();
     this.isEditing.set(false);
+  }
+
+  ngOnChanges(): void {
+    if (this.disabled()) {
+      this.closeMenu();
+      this.cancelEdit();
+      this.clearDeleteTimeout();
+      this.isRemoving.set(false);
+    }
   }
 
   ngOnDestroy(): void {

@@ -8,11 +8,12 @@
       <app-sorting-value
         [value]="item.value"
         [isNew]="item.id === newestValueId()"
-        (deleteRequested)="sortingList.removeValueAt(index)"
-        (valueEdited)="sortingList.updateValueAt(index, $event)"
+        [disabled]="simulation.editingDisabled()"
+        (deleteRequested)="removeValue(index)"
+        (valueEdited)="editValue(index, $event)"
       />
     }
 
-    <app-value-adder (valueAdded)="addValue($event)" />
+    <app-value-adder [disabled]="simulation.editingDisabled()" (valueAdded)="addValue($event)" />
   </div>
 </section>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SimulationControlsComponent } from '../../components/simulation-controls/simulation-controls.component';
 import { AppHeaderComponent } from '../../../../shared/ui/app-header/app-header.component';
@@ -11,4 +11,19 @@ import { SortingListService } from '../../services/sorting-list.service';
   providers: [SortingListService, BubbleSortSimulationService],
   templateUrl: './sorting-layout.page.html',
 })
-export class SortingLayoutPage {}
+export class SortingLayoutPage {
+  readonly simulation = inject(BubbleSortSimulationService);
+
+  togglePlayback(): void {
+    switch (this.simulation.playback()) {
+      case 'playing':
+        this.simulation.pause();
+        break;
+      case 'completed':
+        this.simulation.restart();
+        break;
+      default:
+        this.simulation.start();
+    }
+  }
+}

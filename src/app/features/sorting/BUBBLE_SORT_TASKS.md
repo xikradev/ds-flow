@@ -23,11 +23,11 @@ Cada tarefa é uma entrega pequena e verificável. Marque-a como concluída some
 
 - [x] **5. Implementar reprodução automática.** Conectar início, pausa, retomada e temporizador às etapas. Garantir que a navegação manual pause a reprodução e que temporizadores sejam cancelados ao sair da feature. Testar com tempo controlado.
 
-- [ ] **6. Implementar conclusão e reinício.** Ao chegar à última etapa, finalizar a reprodução e disponibilizar Restart. Reiniciar restaura a lista original e começa novamente; listas com menos de dois valores não podem iniciar. Testar esses fluxos e seus limites.
+- [x] **6. Implementar conclusão e reinício.** Ao chegar à última etapa, finalizar a reprodução e disponibilizar Restart. Reiniciar restaura a lista original e começa novamente; listas com menos de dois valores não podem iniciar. Testar esses fluxos e seus limites.
 
-- [ ] **7. Conectar os controles persistentes.** Ligar o footer do layout ao estado e às ações da simulação, mantendo os componentes de controle apresentacionais. Exibir Start, Pause ou Restart conforme o estado e desabilitar ações indisponíveis. Testar as interações do footer.
+- [x] **7. Conectar os controles persistentes.** Ligar o footer do layout ao estado e às ações da simulação, mantendo os componentes de controle apresentacionais. Exibir Start, Pause ou Restart conforme o estado e desabilitar ações indisponíveis. Testar as interações do footer.
 
-- [ ] **8. Proteger edição durante a simulação.** Desabilitar adição, edição e exclusão enquanto estiver reproduzindo ou pausado. Após a conclusão, permitir alterações e preparar uma nova simulação sem histórico obsoleto. Testar também menus ou edições já abertos no início da reprodução.
+- [x] **8. Proteger edição durante a simulação.** Desabilitar adição, edição e exclusão enquanto estiver reproduzindo ou pausado. Após a conclusão, permitir alterações e preparar uma nova simulação sem histórico obsoleto. Testar também menus ou edições já abertos no início da reprodução.
 
 - [ ] **9. Destacar comparações e valores ordenados.** Adicionar ao design system tokens amarelos e verdes para ambos os temas. Aplicar os estados aos quadrados, com informação acessível além da cor e contraste adequado. Testar os estados renderizados em cada etapa.
 

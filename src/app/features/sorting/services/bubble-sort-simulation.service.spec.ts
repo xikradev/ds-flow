@@ -109,7 +109,51 @@ describe('BubbleSortSimulationService', () => {
       simulation.start();
       jest.advanceTimersByTime(10000);
       expect(simulation.history().currentIndex).toBe(simulation.history().steps.length - 1);
+      expect(simulation.playback()).toBe('completed');
+      expect(jest.getTimerCount()).toBe(0);
+    });
+
+    it('restarts from the original items and begins playback again', () => {
+      const original = list.items();
+      simulation.restart();
+      expect(simulation.playback()).toBe('idle');
+      simulation.start();
+      jest.advanceTimersByTime(10000);
+      expect(simulation.playback()).toBe('completed');
+      expect(simulation.canStart()).toBe(false);
+
+      simulation.restart();
+      expect(list.items()).toEqual(original);
+      expect(simulation.history().currentIndex).toBe(0);
+      expect(simulation.currentStep()?.sortedPositions).toEqual([]);
+      expect(simulation.playback()).toBe('playing');
+      jest.advanceTimersByTime(1000);
+      expect(simulation.history().currentIndex).toBe(1);
+      simulation.pause();
+    });
+
+    it('completes through manual navigation and resumes after going back', () => {
+      simulation.prepare();
+      while (simulation.canGoForward()) simulation.next();
+      expect(simulation.playback()).toBe('completed');
+      simulation.previous();
       expect(simulation.playback()).toBe('paused');
+      expect(simulation.canStart()).toBe(true);
+      simulation.start();
+      jest.advanceTimersByTime(1000);
+      expect(simulation.playback()).toBe('completed');
+    });
+
+    it.each([[[]], [[{ id: 1, value: 7 }]]])('does not start with fewer than two items: %p', (items) => {
+      list.applySnapshot(items);
+      expect(simulation.canStart()).toBe(false);
+      simulation.start();
+      expect(simulation.playback()).toBe('idle');
+      expect(simulation.history().currentIndex).toBe(-1);
+      expect(jest.getTimerCount()).toBe(0);
+      simulation.prepare();
+      simulation.start();
+      expect(simulation.playback()).toBe('idle');
       expect(jest.getTimerCount()).toBe(0);
     });
 
